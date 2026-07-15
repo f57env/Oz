@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abdul Faisal | Junior SOC Analyst</title>
+    <meta name="description" content="Portfolio of Abdul Faisal, a Junior SOC Analyst specializing in Threat Detection, SIEM, and Incident Response.">
+    
+    <!-- Tailwind CSS (via CDN for portability) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            DEFAULT: '#00eeff', // Primary Cyan
+                            hover: '#00aaff',
+                            dark: '#0a0a0a',
+                            slate: '#101010',
+                            card: '#151515'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+
+    <style>
+        /* ====================
+           PRELOADER STYLES
+           ==================== */
+        .room-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 99998;
+            pointer-events: all;
+        }
+
+        .logo-overlay {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 99999;
+            background-color: #000;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 1.5s ease;
+        }
+
+        .logo-overlay.fade-out {
+            opacity: 0;
+        }
+
+        .tcf-logo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 1;
+            z-index: 100000;
+            transform: scale(1);
+            transition: all 2.5s ease;
+            pointer-events: none;
+            object-fit: cover;
+        }
+
+        .tcf-logo.fade-out {
+            transform: scale(1.2);
+            opacity: 0;
+        }
+
+        .page-state {
+            position: fixed;
+            top: calc(50% + 100px);
+            left: 50%;
+            transform: translateX(-50%);
+            color: #f1f1f1;
+            z-index: 100001;
+            opacity: 1;
+            transition: opacity 1s ease;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .page-state.fade-out {
+            opacity: 0;
+        }
+
+        /* Skip Button Styles */
+        .skip-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100002;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #00eeff;
+            color: #00eeff;
+            padding: 10px 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            animation: fadeIn 0.5s ease 0.5s forwards; /* Delay fade in slightly */
+        }
+
+        .skip-button:hover {
+            background: rgba(0, 238, 255, 0.2);
+            box-shadow: 0 0 15px rgba(0, 238, 255, 0.5);
+            text-shadow: 0 0 5px #00eeff;
+        }
+
+        .skip-button.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* ====================
+           EXISTING STYLES
+           ==================== */
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 238, 255, 0.1);
+        }
+        
+        .section-fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        
+        .section-fade.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cyber-glow {
+            box-shadow: 0 0 15px rgba(0, 238, 255, 0.15);
+        }
+        
+        .cyber-border {
+            position: relative;
+        }
+        
+        .cyber-border::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: #00eeff;
+            transition: width 0.3s ease;
+        }
+        
+        .cyber-border:hover::after {
+            width: 100%;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00eeff;
+        }
+    </style>
+</head>
+<body class="bg-cyber-dark text-gray-300 font-sans selection:bg-cyber selection:text-black overflow-x-hidden antialiased">
+
+    <!-- PRELOADER OVERLAY -->
+    <div class="room-overlay">
+        <div class="logo-overlay"></div>
+        <!-- Ensure 'interstellar docking.gif' is in your project folder -->
+        <img class="tcf-logo" src="interstellar docking.gif" alt="System Initializing...">
+        <span class="page-state pulse"></span>
+        <!-- Skip Button -->
+        <button id="skip-btn" class="skip-button">Skip Intro <i class="fas fa-forward ml-2"></i></button>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="#" class="text-2xl font-bold text-white tracking-tighter group">
+                <span class="text-cyber group-hover:text-white transition-colors">&lt;</span> 
+                AF 
+                <span class="text-cyber group-hover:text-white transition-colors">/&gt;</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <ul class="hidden md:flex space-x-8 items-center">
+                <li><a href="#about" class="hover:text-cyber transition-colors text-sm font-medium tracking-wide cyber-border py-1">ABOUT</a></li>
+                <li><a href="#skills" class="hover:text-cyber transition-colors text-sm font-medium tracking-wide cyber-border py-1">SKILLS</a></li>
+                <li><a href="#projects" class="hover:text-cyber transition-colors text-sm font-medium tracking-wide cyber-border py-1">PROJECTS</a></li>
+                <li><a href="#experience" class="hover:text-cyber transition-colors text-sm font-medium tracking-wide cyber-border py-1">EXP</a></li>
+                <!-- NEW EXTERNAL LINK -->
+                <li><a href="https://f-writeups.vercel.app/" target="_blank" class="hover:text-cyber transition-colors text-sm font-medium tracking-wide cyber-border py-1">WRITE-UPS</a></li>
+                <li><a href="#contact" class="px-5 py-2 border border-cyber text-cyber hover:bg-cyber hover:text-black transition-all rounded font-semibold text-sm">CONTACT</a></li>
+                
+                <!-- Theme Toggle (Hidden on mobile, visible desktop) -->
+                <li>
+                    <button id="theme-toggle-desktop" class="text-gray-400 hover:text-yellow-400 transition-colors">
+                        <!--span class="material-symbols-outlined">light_mode</span>
+                    </button -->
+                </li>
+            </ul>
+
+            <!-- Mobile Toggle -->
+            <div class="md:hidden flex items-center gap-4">
+                <button id="theme-toggle-mobile" class="text-gray-400 hover:text-yellow-400 transition-colors">
+                    <!--span class="material-symbols-outlined">light_mode</span -->
+                </button>
+                <button id="mobile-menu-btn" class="text-white focus:outline-none">
+                    <span class="material-symbols-outlined text-3xl">menu</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div id="mobile-menu" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-40 transform translate-x-full transition-transform duration-300 flex flex-col justify-center items-center space-y-8 md:hidden">
+            <button id="close-menu-btn" class="absolute top-6 right-6 text-white">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </button>
+            <a href="#about" class="mobile-link text-2xl font-bold hover:text-cyber">ABOUT</a>
+            <a href="#skills" class="mobile-link text-2xl font-bold hover:text-cyber">SKILLS</a>
+            <a href="#projects" class="mobile-link text-2xl font-bold hover:text-cyber">PROJECTS</a>
+            <a href="#experience" class="mobile-link text-2xl font-bold hover:text-cyber">EXPERIENCE</a>
+            <!-- NEW EXTERNAL LINK -->
+            <a href="https://f-writeups.vercel.app/" target="_blank" class="mobile-link text-2xl font-bold hover:text-cyber">WRITE-UPS</a>
+            <a href="#contact" class="mobile-link text-2xl font-bold text-cyber">CONTACT</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center relative pt-20 overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full z-0 opacity-20 pointer-events-none">
+            <div class="absolute top-[-10%] right-[-10%] w-[500px] h-[500px] bg-cyber/20 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-[-10%] left-[-10%] w-[400px] h-[400px] bg-blue-600/20 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div class="container mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-12 items-center">
+            <!-- Text Content -->
+            <div class="section-fade">
+                <div class="inline-block px-3 py-1 mb-4 border border-cyber/30 rounded-full bg-cyber/5">
+                    <span class="text-cyber font-mono text-xs tracking-wider">Available for Hire</span>
+                </div>
+                <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight mb-4">
+                    Abdul <span class="text-cyber">Faisal</span>
+                </h1>
+                <h2 class="text-xl md:text-2xl text-gray-400 font-medium mb-6">
+                    Junior <span class="text-white">SOC Analyst</span> & Threat Hunter
+                </h2>
+                <p class="text-gray-400 mb-8 max-w-lg leading-relaxed">
+                    Monitoring perimeters, analyzing logs, and responding to incidents. 
+                    Skilled in <span class="text-cyber font-semibold">CrowdStrike, Wazuh, and Elastic Stack</span>. 
+                    I turn raw data into actionable security intelligence.
+                </p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="#projects" class="px-8 py-3 bg-cyber text-black font-bold rounded hover:bg-white transition-all shadow-[0_0_20px_rgba(0,238,255,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)]">
+                        View Projects
+                    </a>
+                    <a href="#contact" class="px-8 py-3 border border-gray-600 text-white font-medium rounded hover:border-cyber hover:text-cyber transition-all flex items-center gap-2">
+                        Contact Me <span class="material-symbols-outlined text-sm">arrow_forward</span>
+                    </a>
+                </div>
+
+                <div class="mt-10 flex items-center gap-6">
+                    <a href="https://github.com/abdulfaisal001" target="_blank" class="text-gray-400 hover:text-white text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/abdulfaisal1/" target="_blank" class="text-gray-400 hover:text-blue-500 text-2xl transition-transform hover:-translate-y-1"><i class="fab fa-linkedin"></i></a>
+                    <a href="mailto:abdulfaisal001@gmail.com" class="text-gray-400 hover:text-red-400 text-2xl transition-transform hover:-translate-y-1"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+
+            <!-- Hero Image -->
+            <div class="section-fade delay-200 flex justify-center relative">
+                <div class="relative w-300 h-60 md:w-96 md:h-30 animate-float flex items-center justify-center">
+                    <!-- Decorative Rings 
+                    <div class="absolute inset-0 border-2 border-cyber/20 rounded-full animate-[spin_10s_linear_infinite]"></div>
+                    <div class="absolute inset-4 border border-dashed border-cyber/40 rounded-full animate-[spin_15s_linear_infinite_reverse]"></div>-->
+                    
+                    <!-- Main Image/Badge -->
+                    <div class="absolute inset-12 rounded-lg overflow-hidden border-2 border-cyber shadow-[0_0_30px_rgba(0,255,200,0.3)] bg-black z-10 flex items-center justify-center">
+                        <!-- TryHackMe Badge -->
+                        <iframe src="https://tryhackme.com/api/v2/badges/public-profile?userPublicId=4211941" style='border:none; width: 100%; height: 100%; overflow: hidden;'></iframe>
+                    </div>
+
+                    <!-- Floating Badge -->
+                    <div class="absolute bottom-0 right-10 bg-cyber-card border border-cyber/30 p-3 rounded-lg shadow-xl backdrop-blur-md z-20">
+                        <div class="flex items-center gap-3">
+                            <div class="w-3 h-3 bg-green-200 rounded-full animate-pulse"></div>
+                            <span class="text-xs font-mono text-cyber">System Secure</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-cyber-slate">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center gap-4 mb-10 section-fade">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white">About Me</h2>
+                    <div class="h-1 flex-grow bg-gradient-to-r from-cyber to-transparent rounded"></div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-10 items-start section-fade">
+                    <!-- Info Card -->
+                    <div class="md:col-span-1 bg-cyber-card p-6 rounded-xl border border-gray-800 hover:border-cyber/50 transition-colors text-center">
+                        <div class="w-24 h-24 bg-cyber/10 rounded-full flex items-center justify-center mx-auto mb-4 text-cyber">
+                            <span class="material-symbols-outlined text-4xl">security</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-1">Cyber Analyst</h3>
+                        <p class="text-sm text-gray-500 mb-4">Defensive Security</p>
+                        <div class="space-y-3 text-left">
+                            <div class="flex items-center gap-3 text-sm text-gray-400">
+                                <span class="material-symbols-outlined text-cyber text-lg">location_on</span>
+                                Hyderabad, India
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-gray-400">
+                                <span class="material-symbols-outlined text-cyber text-lg">school</span>
+                                B.Tech (CS)
+                            </div>
+                            <div class="flex items-center gap-3 text-sm text-gray-400">
+                                <span class="material-symbols-outlined text-cyber text-lg">language</span>
+                                English, Hindi
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Biography -->
+                    <div class="md:col-span-2 text-gray-400 leading-relaxed space-y-4">
+                        <p>
+                            I am a <span class="text-white font-semibold">Junior SOC Analyst</span> dedicated to strengthening security postures through proactive monitoring and analysis. 
+                            With hands-on experience in threat detection, alert triage, and incident response, I bridge the gap between raw logs and security insights.
+                        </p>
+                        <p>
+                            My technical foundation covers SIEM architecture, vulnerability assessment, and network security. 
+                            I have actively worked with industry-standard tools like <span class="text-cyber">Splunk, Wazuh, and CrowdStrike</span> 
+                            to detect anomalies and mitigate threats before they escalate.
+                        </p>
+                        <p>
+                            Beyond the terminal, I am a leader and community builder, having led clubs and organized events for hundreds of students. 
+                            I thrive in collaborative environments where curiosity meets discipline.
+                        </p>
+                        
+                        <div class="pt-4 flex gap-4">
+                            <div class="text-center">
+                                <h4 class="text-2xl font-bold text-white">5+</h4>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">Projects</span>
+                            </div>
+                            <div class="w-px bg-gray-700 h-12"></div>
+                            <div class="text-center">
+                                <h4 class="text-2xl font-bold text-white">4</h4>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">Internships</span>
+                            </div>
+                            <div class="w-px bg-gray-700 h-12"></div>
+                            <div class="text-center">
+                                <h4 class="text-2xl font-bold text-white">4+</h4>
+                                <span class="text-xs text-gray-500 uppercase tracking-wider">Certs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col items-center mb-16 section-fade">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Technical Arsenal</h2>
+                <p class="text-gray-400 text-center max-w-2xl">Tools and technologies I utilize to secure digital infrastructures.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 section-fade">
+                <!-- Skill Group 1 -->
+                <div class="bg-cyber-card p-6 rounded-xl border-t-4 border-cyber shadow-lg hover:-translate-y-2 transition-transform">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="material-symbols-outlined text-cyber text-3xl">radar</span>
+                        <h3 class="text-xl font-bold text-white">SIEM & SOC</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-cyber/10 text-cyber text-sm rounded-full border border-cyber/20">Splunk</span>
+                        <span class="px-3 py-1 bg-cyber/10 text-cyber text-sm rounded-full border border-cyber/20">Elastic Stack</span>
+                        <span class="px-3 py-1 bg-cyber/10 text-cyber text-sm rounded-full border border-cyber/20">Wazuh</span>
+                        <span class="px-3 py-1 bg-cyber/10 text-cyber text-sm rounded-full border border-cyber/20">CrowdStrike</span>
+                        <span class="px-3 py-1 bg-cyber/10 text-cyber text-sm rounded-full border border-cyber/20">Sysmon</span>
+                        <span class="px-3 py-1 bg-cyber/10 text-cyber text-sm rounded-full border border-cyber/20">Threat Hunting</span>
+                        <span class="px-3 py-1 bg-cyber/10 text-cyber text-sm rounded-full border border-cyber/20">Incident Response</span>
+                    </div>
+                </div>
+
+                <!-- Skill Group 2 -->
+                <div class="bg-cyber-card p-6 rounded-xl border-t-4 border-blue-500 shadow-lg hover:-translate-y-2 transition-transform">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="material-symbols-outlined text-blue-500 text-3xl">terminal</span>
+                        <h3 class="text-xl font-bold text-white">Scripting & Tools</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-sm rounded-full border border-blue-500/20">Python</span>
+                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-sm rounded-full border border-blue-500/20">Bash</span>
+                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-sm rounded-full border border-blue-500/20">PowerShell</span>
+                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-sm rounded-full border border-blue-500/20">KQL/Lucene</span>
+                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-sm rounded-full border border-blue-500/20">Wireshark</span>
+                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-sm rounded-full border border-blue-500/20">Nmap</span>
+                        <span class="px-3 py-1 bg-blue-500/10 text-blue-400 text-sm rounded-full border border-blue-500/20">Burp Suite</span>
+                    </div>
+                </div>
+
+                <!-- Skill Group 3 -->
+                <div class="bg-cyber-card p-6 rounded-xl border-t-4 border-purple-500 shadow-lg hover:-translate-y-2 transition-transform">
+                    <div class="flex items-center gap-3 mb-6">
+                        <span class="material-symbols-outlined text-purple-500 text-3xl">dns</span>
+                        <h3 class="text-xl font-bold text-white">Core Platforms</h3>
+                    </div>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="px-3 py-1 bg-purple-500/10 text-purple-400 text-sm rounded-full border border-purple-500/20">Linux (Ubuntu)</span>
+                        <span class="px-3 py-1 bg-purple-500/10 text-purple-400 text-sm rounded-full border border-purple-500/20">Windows AD</span>
+                        <span class="px-3 py-1 bg-purple-500/10 text-purple-400 text-sm rounded-full border border-purple-500/20">TCP/IP Model</span>
+                        <span class="px-3 py-1 bg-purple-500/10 text-purple-400 text-sm rounded-full border border-purple-500/20">Docker</span>
+                        <span class="px-3 py-1 bg-purple-500/10 text-purple-400 text-sm rounded-full border border-purple-500/20">Git</span>
+                        <span class="px-3 py-1 bg-purple-500/10 text-purple-400 text-sm rounded-full border border-purple-500/20">DNS/HTTP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 bg-cyber-slate">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-end mb-12 section-fade">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-2">Key Projects</h2>
+                    <p class="text-gray-400">Practical implementation of security concepts.</p>
+                </div>
+                <a href="https://github.com/abdulfaisal001" target="_blank" class="hidden md:flex items-center gap-2 text-cyber hover:text-white transition-colors">
+                    View GitHub <span class="material-symbols-outlined text-sm">open_in_new</span>
+                </a>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 section-fade">
+                <!-- Project 1 -->
+                <div class="group relative bg-cyber-card rounded-xl overflow-hidden border border-gray-800 hover:border-cyber/50 transition-all hover:shadow-lg hover:shadow-cyber/10">
+                    <div class="h-48 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-6xl text-cyber opacity-50">hub</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyber transition-colors">APT Detection Platform</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-3">
+                            IDS/IPS-inspired pipeline combining Zeek metadata and host telemetry into Elastic for ATT&CK-aligned detections. Presented at ICASTM-II 2025.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-cyber bg-cyber/10 px-2 py-1 rounded">Elastic</span>
+                            <span class="text-xs font-mono text-cyber bg-cyber/10 px-2 py-1 rounded">Zeek</span>
+                            <span class="text-xs font-mono text-cyber bg-cyber/10 px-2 py-1 rounded">Python</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 2 -->
+                <div class="group relative bg-cyber-card rounded-xl overflow-hidden border border-gray-800 hover:border-cyber/50 transition-all hover:shadow-lg hover:shadow-cyber/10">
+                    <div class="h-48 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-6xl text-blue-500 opacity-50">home_iot_device</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">Home SOC Lab</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-3">
+                            Deployed Elastic Stack; onboarded Sysmon & Zeek. Authored KQL/Sigma rules for credential dumping and lateral movement detection.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">SIEM</span>
+                            <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">KQL</span>
+                            <span class="text-xs font-mono text-blue-400 bg-blue-500/10 px-2 py-1 rounded">Sigma</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 3 -->
+                <div class="group relative bg-cyber-card rounded-xl overflow-hidden border border-gray-800 hover:border-cyber/50 transition-all hover:shadow-lg hover:shadow-cyber/10">
+                    <div class="h-48 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-6xl text-purple-500 opacity-50">travel_explore</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-purple-400 transition-colors">Recon Tool (OSINT)</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-3">
+                            Python-based reconnaissance automation tool for WHOIS, DNS enumeration, and subdomain discovery with modular collectors.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded">Python</span>
+                            <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded">DNS</span>
+                            <span class="text-xs font-mono text-purple-400 bg-purple-500/10 px-2 py-1 rounded">OSINT</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="group relative bg-cyber-card rounded-xl overflow-hidden border border-gray-800 hover:border-cyber/50 transition-all hover:shadow-lg hover:shadow-cyber/10">
+                    <div class="h-48 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-6xl text-red-500 opacity-50">router</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-red-400 transition-colors">PortScanner</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-3">
+                            TCP port scanner with service fingerprinting heuristics to identify open services and map them to common threat implications.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-red-400 bg-red-500/10 px-2 py-1 rounded">Networking</span>
+                            <span class="text-xs font-mono text-red-400 bg-red-500/10 px-2 py-1 rounded">Socket</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="group relative bg-cyber-card rounded-xl overflow-hidden border border-gray-800 hover:border-cyber/50 transition-all hover:shadow-lg hover:shadow-cyber/10">
+                    <div class="h-48 bg-gradient-to-br from-gray-800 to-black flex items-center justify-center group-hover:scale-105 transition-transform duration-500">
+                        <span class="material-symbols-outlined text-6xl text-green-500 opacity-50">bug_report</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-2 group-hover:text-green-400 transition-colors">VulnSentinel</h3>
+                        <p class="text-gray-400 text-sm mb-4 line-clamp-3">
+                            Automated detection of web app vulnerabilities (SQLi, XSS) using parameterized payloads and response analysis.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs font-mono text-green-400 bg-green-500/10 px-2 py-1 rounded">WebSec</span>
+                            <span class="text-xs font-mono text-green-400 bg-green-500/10 px-2 py-1 rounded">SQLi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience & Timeline Section -->
+    <section id="experience" class="py-20 relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16">
+                
+                <!-- Professional Experience -->
+                <div class="section-fade">
+                    <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-cyber">work</span> Experience
+                    </h2>
+                    <div class="space-y-8 border-l-2 border-gray-800 ml-3 pl-8 relative">
+                        
+                        <!-- Item 1 -->
+                        <div class="relative">
+                            <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-cyber border-4 border-black cyber-glow"></span>
+                            <div class="mb-1">
+                                <span class="text-xs font-mono text-cyber bg-cyber/10 px-2 py-1 rounded">Apr 2024 – Jul 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mt-2">Cyber Security Intern</h3>
+                            <p class="text-blue-400 text-sm font-semibold mb-2">Pinnacle Labs</p>
+                            <ul class="list-disc list-inside text-gray-400 text-sm space-y-1">
+                                <li>Assisted vulnerability scanning and basic log review.</li>
+                                <li>Documented findings and remediation notes.</li>
+                                <li>Collaborated with senior analysts on ticket validation.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="relative">
+                            <span class="absolute -left-[41px] top-1 w-5 h-5 rounded-full bg-gray-600 border-4 border-black"></span>
+                            <div class="mb-1">
+                                <span class="text-xs font-mono text-gray-400 bg-gray-800 px-2 py-1 rounded">Nov 2023 – Aug 2024</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mt-2">Web Development Intern</h3>
+                            <p class="text-blue-400 text-sm font-semibold mb-2">Motion Cut</p>
+                            <ul class="list-disc list-inside text-gray-400 text-sm space-y-1">
+                                <li>Maintained front-end components using secure coding practices.</li>
+                                <li>Implemented input validation and dependency updates.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Education & Training -->
+                <div class="section-fade delay-200">
+                    <h2 class="text-3xl font-bold text-white mb-8 flex items-center gap-3">
+                        <span class="material-symbols-outlined text-cyber">school</span> Education & Training
+                    </h2>
+                    
+                    <!-- Degree -->
+                    <div class="bg-cyber-card p-6 rounded-xl border border-gray-800 mb-8">
+                        <h3 class="text-lg font-bold text-white">B.Tech in Computer Science</h3>
+                        <p class="text-gray-400 text-sm mb-2">CMR College of Engineering (Cybersecurity)</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono text-gray-500">2021 - 2025</span>
+                            <span class="text-xs font-mono text-cyber">CGPA: 7.27</span>
+                        </div>
+                    </div>
+
+                    <!-- Trainings List -->
+                    <h3 class="text-lg font-semibold text-gray-300 mb-4">Virtual Internships & Trainings</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start gap-4 p-4 bg-cyber-card/50 rounded-lg hover:bg-cyber-card transition-colors">
+                            <i class="fas fa-laptop-code text-blue-400 mt-1"></i>
+                            <div>
+                                <h4 class="text-white font-medium">Tata Group - Cybersecurity Analyst</h4>
+                                <span class="text-xs text-gray-500">Forage | Apr 2024</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 bg-cyber-card/50 rounded-lg hover:bg-cyber-card transition-colors">
+                            <i class="fas fa-user-secret text-green-400 mt-1"></i>
+                            <div>
+                                <h4 class="text-white font-medium">Ethical Hacking Virtual Internship</h4>
+                                <span class="text-xs text-gray-500">Jul – Sep 2024</span>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 bg-cyber-card/50 rounded-lg hover:bg-cyber-card transition-colors">
+                            <i class="fas fa-shield-alt text-orange-400 mt-1"></i>
+                            <div>
+                                <h4 class="text-white font-medium">Palo Alto Cybersecurity Internship</h4>
+                                <span class="text-xs text-gray-500">Apr – Jun 2024</span>
+                            </div>
+                        </div>
+                         <div class="flex items-start gap-4 p-4 bg-cyber-card/50 rounded-lg hover:bg-cyber-card transition-colors">
+                            <i class="fas fa-cloud text-cyan-400 mt-1"></i>
+                            <div>
+                                <h4 class="text-white font-medium">Juniper Networking Cloud Internship</h4>
+                                <span class="text-xs text-gray-500">Jan – Mar 2024</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership & Certifications (Grid) -->
+    <section id="leadership" class="py-20 bg-cyber-slate">
+        <div class="container mx-auto px-6">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Certifications -->
+                <div class="section-fade">
+                    <h2 class="text-2xl font-bold text-white mb-6">Certifications</h2>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div class="bg-cyber-card p-4 rounded border border-gray-800 flex items-center gap-3">
+                            <i class="fas fa-certificate text-yellow-500 text-xl"></i>
+                            <div>
+                                <h4 class="text-white text-sm font-bold">Google Cybersecurity</h4>
+                                <p class="text-xs text-gray-500">Coursera</p>
+                            </div>
+                        </div>
+                        <div class="bg-cyber-card p-4 rounded border border-gray-800 flex items-center gap-3">
+                            <i class="fas fa-network-wired text-blue-500 text-xl"></i>
+                            <div>
+                                <h4 class="text-white text-sm font-bold">Cisco Ethical Hacker</h4>
+                                <p class="text-xs text-gray-500">Networking Academy</p>
+                            </div>
+                        </div>
+                        <div class="bg-cyber-card p-4 rounded border border-gray-800 flex items-center gap-3">
+                            <i class="fas fa-shield-virus text-green-500 text-xl"></i>
+                            <div>
+                                <h4 class="text-white text-sm font-bold">CyberOps Associate</h4>
+                                <p class="text-xs text-gray-500">Cisco</p>
+                            </div>
+                        </div>
+                        <div class="bg-cyber-card p-4 rounded border border-gray-800 flex items-center gap-3">
+                            <i class="fas fa-lock text-red-500 text-xl"></i>
+                            <div>
+                                <h4 class="text-white text-sm font-bold">Fortinet Associate</h4>
+                                <p class="text-xs text-gray-500">Fortinet</p>
+                            </div>
+                        </div>
+                        <!-- NEW CERTIFICATION STACK LINK -->
+                        <a href="https://abdulfaisal001.github.io/2/" target="_blank" class="bg-cyber-card p-4 rounded border border-gray-800 flex items-center gap-3 hover:border-cyber/50 transition-all group">
+                            <i class="fas fa-layer-group text-purple-400 text-xl group-hover:scale-110 transition-transform"></i>
+                            <div>
+                                <h4 class="text-white text-sm font-bold group-hover:text-cyber transition-colors">Certification Stack</h4>
+                                <p class="text-xs text-gray-500">View All Credentials</p>
+                            </div>
+                            <span class="material-symbols-outlined text-gray-600 ml-auto group-hover:text-cyber transition-colors text-sm">open_in_new</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Leadership -->
+                <div class="section-fade delay-100">
+                    <h2 class="text-2xl font-bold text-white mb-6">Leadership & Volunteering</h2>
+                    <div class="space-y-4">
+                        <div class="border-l-2 border-cyber pl-4">
+                            <h4 class="text-white font-bold">President, Entrepreneurs' Club</h4>
+                            <p class="text-xs text-gray-400">CMRCET | Led team of 12, organized events for 500+ students.</p>
+                        </div>
+                        <div class="border-l-2 border-gray-700 pl-4">
+                            <h4 class="text-white font-bold">Secretary, Rotaract Club</h4>
+                            <p class="text-xs text-gray-400">Directed 5+ community projects.</p>
+                        </div>
+                        <div class="border-l-2 border-gray-700 pl-4">
+                            <h4 class="text-white font-bold">Campus Lead</h4>
+                            <p class="text-xs text-gray-400">EdVenture Park & Zuno</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative">
+        <div class="container mx-auto px-6 max-w-5xl">
+            <div class="bg-cyber-card rounded-2xl overflow-hidden shadow-2xl border border-gray-800 flex flex-col md:flex-row section-fade">
+                
+                <!-- Info Side -->
+                <div class="bg-gray-900 p-10 md:w-2/5 flex flex-col justify-between relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-cyber/10 rounded-full blur-3xl"></div>
+                    
+                    <div>
+                        <h2 class="text-3xl font-bold text-white mb-6">Let's Connect</h2>
+                        <p class="text-gray-400 mb-8 text-sm">
+                            Interested in my security research or looking to hire a SOC analyst? I'm just a message away.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <a href="mailto:abdulfaisal001@gmail.com" class="flex items-center gap-4 text-gray-300 hover:text-cyber transition-colors group">
+                                <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center group-hover:bg-cyber group-hover:text-black transition-all">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <span class="text-sm font-medium">abdulfaisal001@gmail.com</span>
+                            </a>
+                            <a href="tel:+919640146237" class="flex items-center gap-4 text-gray-300 hover:text-cyber transition-colors group">
+                                <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center group-hover:bg-cyber group-hover:text-black transition-all">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <span class="text-sm font-medium">+91 9640146237</span>
+                            </a>
+                            <a href="https://www.linkedin.com/in/abdulfaisal1/" class="flex items-center gap-4 text-gray-300 hover:text-cyber transition-colors group">
+                                <div class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center group-hover:bg-cyber group-hover:text-black transition-all">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </div>
+                                <span class="text-sm font-medium">/in/abdulfaisall</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="mt-10">
+                        <div class="text-xs font-mono text-gray-500 mb-2">CURRENT LOCATION</div>
+                        <div class="text-white font-medium flex items-center gap-2">
+                            <span class="relative flex h-3 w-3">
+                              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyber opacity-75"></span>
+                              <span class="relative inline-flex rounded-full h-3 w-3 bg-cyber"></span>
+                            </span>
+                            Hyderabad, India
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form Side -->
+                <div class="p-10 md:w-3/5 bg-cyber-slate">
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Name</label>
+                                <input type="text" name="name" required class="w-full bg-black border border-gray-800 rounded p-3 text-white focus:border-cyber focus:outline-none transition-colors" placeholder="Joseph Cooper">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Email</label>
+                                <input type="email" name="email" required class="w-full bg-black border border-gray-800 rounded p-3 text-white focus:border-cyber focus:outline-none transition-colors" placeholder="JCooper@example.com">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Subject</label>
+                            <input type="text" name="subject" required class="w-full bg-black border border-gray-800 rounded p-3 text-white focus:border-cyber focus:outline-none transition-colors" placeholder="Job Opportunity">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold text-gray-500 uppercase tracking-wider">Message</label>
+                            <textarea rows="4" name="message" required class="w-full bg-black border border-gray-800 rounded p-3 text-white focus:border-cyber focus:outline-none transition-colors" placeholder="Hello Abdul..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-cyber text-black font-bold py-3 rounded hover:bg-white transition-colors shadow-lg shadow-cyber/20">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black py-8 border-t border-gray-900">
+        <div class="container mx-auto px-6 text-center">
+            <a href="#" class="text-xl font-bold text-white tracking-tighter mb-4 inline-block">
+                <span class="text-cyber">&lt;</span> AF <span class="text-cyber">/&gt;</span>
+            </a>
+            <p class="text-gray-600 text-sm mb-6"> Securing the digital frontier, one packet at a time.</p>
+            <p class="text-gray-700 text-xs">&copy; 2025 Abdul Faisal. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Notification Toast (Hidden) -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-cyber text-black px-6 py-3 rounded shadow-lg transform translate-y-20 opacity-0 transition-all duration-300 z-50 font-bold flex items-center gap-3">
+        <span class="material-symbols-outlined">check_circle</span>
+        Message Sent Successfully!
+    </div>
+
+    <!-- JavaScript Interactions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            
+            // --- 0. PRELOADER LOGIC ---
+            const logoOverlay = document.querySelector('.logo-overlay');
+            const tcfLogo = document.querySelector('.tcf-logo');
+            const pageState = document.querySelector('.page-state');
+            const roomOverlay = document.querySelector('.room-overlay');
+            const skipBtn = document.getElementById('skip-btn');
+
+            // Prevent scrolling initially
+            document.body.style.overflow = 'hidden';
+
+            // Function to handle the exit sequence
+            function startExitSequence() {
+                // Add fade classes
+                logoOverlay.classList.add('fade-out');
+                tcfLogo.classList.add('fade-out');
+                if(pageState) pageState.classList.add('fade-out');
+                if(skipBtn) skipBtn.classList.add('fade-out');
+
+                // Wait for transition then remove
+                setTimeout(() => {
+                    roomOverlay.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }, 1500);
+            }
+            
+            // Auto trigger after 2.5 seconds
+            const autoTimer = setTimeout(startExitSequence, 2500);
+
+            // Manual trigger via Skip button
+            if (skipBtn) {
+                skipBtn.addEventListener('click', () => {
+                    clearTimeout(autoTimer); // Stop the auto timer
+                    startExitSequence(); // Start exit immediately
+                });
+            }
+
+            // --- 1. Navbar Scroll Effect ---
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('glass-nav');
+                } else {
+                    navbar.classList.remove('glass-nav');
+                }
+            });
+
+            // --- 2. Mobile Menu Logic ---
+            const mobileBtn = document.getElementById('mobile-menu-btn');
+            const closeMenuBtn = document.getElementById('close-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const mobileLinks = document.querySelectorAll('.mobile-link');
+
+            function toggleMenu() {
+                const isOpen = !mobileMenu.classList.contains('translate-x-full');
+                if (isOpen) {
+                    mobileMenu.classList.add('translate-x-full');
+                    document.body.classList.remove('overflow-hidden');
+                } else {
+                    mobileMenu.classList.remove('translate-x-full');
+                    document.body.classList.add('overflow-hidden');
+                }
+            }
+
+            mobileBtn.addEventListener('click', toggleMenu);
+            closeMenuBtn.addEventListener('click', toggleMenu);
+            
+            mobileLinks.forEach(link => {
+                link.addEventListener('click', toggleMenu);
+            });
+
+            // --- 3. Theme Toggle (LocalStorage) ---
+            const themeToggles = [document.getElementById('theme-toggle-desktop'), document.getElementById('theme-toggle-mobile')];
+            const html = document.documentElement;
+            
+            // Check saved theme
+            if (localStorage.getItem('theme') === 'light') {
+                enableLightMode();
+            }
+
+            function enableLightMode() {
+                html.classList.remove('dark');
+                document.body.classList.replace('bg-cyber-dark', 'bg-gray-50');
+                document.body.classList.replace('text-gray-300', 'text-gray-800');
+                // Update icons
+                themeToggles.forEach(btn => btn.innerHTML = '<span class="material-symbols-outlined">dark_mode</span>');
+                localStorage.setItem('theme', 'light');
+            }
+
+            function enableDarkMode() {
+                html.classList.add('dark');
+                document.body.classList.replace('bg-gray-50', 'bg-cyber-dark');
+                document.body.classList.replace('text-gray-800', 'text-gray-300');
+                // Update icons
+                themeToggles.forEach(btn => btn.innerHTML = '<span class="material-symbols-outlined">light_mode</span>');
+                localStorage.setItem('theme', 'dark');
+            }
+
+            themeToggles.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (document.body.classList.contains('bg-cyber-dark')) {
+                        enableLightMode();
+                    } else {
+                        enableDarkMode();
+                    }
+                });
+            });
+
+            // --- 4. Scroll Animations (Intersection Observer) ---
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: "0px 0px -50px 0px"
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.section-fade').forEach(el => {
+                observer.observe(el);
+            });
+
+            // --- 5. Contact Form Submission (Ready for Formspree) ---
+            const form = document.getElementById('contactForm');
+            const toast = document.getElementById('toast');
+            
+            // PASTE YOUR FORMSPREE ID HERE (e.g., "xdoqjrzb")
+            const formspreeId = 'mrbvndro'; 
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                const originalText = btn.innerText;
+                
+                // Loading state
+                btn.innerText = 'Sending...';
+                btn.disabled = true;
+                btn.classList.add('opacity-75');
+
+                const formData = new FormData(form);
+
+                try {
+                    let response;
+                    
+                    // Check if user added ID, otherwise simulate
+                    if (formspreeId) {
+                        response = await fetch(`https://formspree.io/f/${formspreeId}`, {
+                            method: "POST",
+                            body: formData,
+                            headers: {
+                                'Accept': 'application/json'
+                            }
+                        });
+                    } else {
+                        // Simulation fallback
+                        await new Promise(resolve => setTimeout(resolve, 1500));
+                        response = { ok: true }; // Fake success
+                    }
+
+                    if (response.ok) {
+                        // Success UI
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                        btn.classList.remove('opacity-75');
+                        form.reset();
+
+                        // Show Toast
+                        toast.classList.remove('translate-y-20', 'opacity-0');
+                        setTimeout(() => {
+                            toast.classList.add('translate-y-20', 'opacity-0');
+                        }, 3000);
+                    } else {
+                        throw new Error('Form submission failed');
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    btn.innerText = 'Error!';
+                    setTimeout(() => {
+                        btn.innerText = originalText;
+                        btn.disabled = false;
+                        btn.classList.remove('opacity-75');
+                    }, 2000);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
